@@ -21,7 +21,7 @@ database: # SQLite3のみ
 ## 最初に実行するSQL
 ```sql
 CREATE TABLE link (
-    id VARCHAR(8),
+    id VARCHAR(8) UNIQUE NOT NULL PRIMARY KEY,
     url TEXT NOT NULL,
     contributor TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -29,14 +29,14 @@ CREATE TABLE link (
 );
 
 CREATE TABLE links (
-    id VARCHAR(8) NOT NULL,
+    id VARCHAR(8) UNIQUE NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     category TEXT NOT NULL
 );
 
-CREATE TABLE link_attirbute (
-    linkid VARCHAR(8) NOT NULL PRIMARY KEY,
+CREATE TABLE link_attribute (
+    linkid VARCHAR(8) NOT NULL,
     linksid VARCHAR(8) NOT NULL
 );
 

@@ -1,5 +1,5 @@
 use actix_web::{HttpResponse, http::header, web::{Data, Path}};
-use crate::{ActixData, services::category::CategoryService};
+use crate::ActixData;
 use anyhow::Result;
 
 use crate::services::link::LinkService;
@@ -22,6 +22,8 @@ pub async fn endpoint_(data: Data<ActixData>, path: Path<PathReq>) -> Result<Htt
     let mut repos = LinkService::read_from_id(&pool, &path.link_id).await?;
 
     LinkService::increment(&mut repos, &pool).await?;
+
+    log::info!("Jump {} ({})", &path.link_id, &repos.url);
 
     Ok(HttpResponse::build(actix_web::http::StatusCode::FOUND)
         .insert_header((header::LOCATION, repos.url))
