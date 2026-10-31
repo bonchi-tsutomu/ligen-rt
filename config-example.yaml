@@ -1,0 +1,11 @@
+site:
+  title: "My Links"
+  description: "Lorem Ipsum Dolor Sit Amet"
+  guidelines: ["Hello", "World", "Foo", "Bar"]
+  allow_request: true
+server:
+  bind: localhost
+  port: 8080
+  theme: ./theme
+database:
+  dbname: test.db

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{category_name}}{% endblock title %}
+{% block main %}
+<h1>{{category_name}}</h1>
+<p>{{category_description}}<br><small>CategoryID: {{category_id}}</small></p>
+{% if site_allowed_request %}
+<p><a href="/request/{{category_id}}">【リンク追加をリクエストする】</a></p>
+{% endif %}
+<h2>リンク集リスト</h2>
+<table border="1">
+    <tr><td>名前</td><td>概要</td></tr>
+    {% for links in links_list %}<tr><td><a href="/links/{{links.id}}">{{links.name}}</a></td><td>{{links.description}}</td></tr>
+{%endfor%}</table>
+</table>
+{% endblock main %}

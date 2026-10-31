@@ -1,0 +1,94 @@
+
+use sqlx::{FromRow, Pool, Sqlite, query, query_as};
+use anyhow::Result;
+use serde::Serialize;
+
+#[derive(FromRow, Serialize)]
+pub struct LinksRepository {
+    pub id: String,
+    pub name: String,
+    pub description: String,
+    pub category: String,
+}
+
+
+impl LinksRepository {
+    pub fn new(
+        id: &str,
+        name: &str,
+        description: &str,
+        category: &str
+    ) -> Self {
+        Self {
+            id: id.to_string(),
+            name: name.to_string(),
+            description: description.to_string(),
+            category: category.to_string()
+        }
+    }
+
+    pub async fn create(&self, db: &Pool<Sqlite>) -> Result<()> {
+        let transaction = db.begin().await?;
+        
+        query("INSERT INTO links (id, name, description, category) VALUES ($1, $2, $3, $4)")
+            .bind(&self.id)
+            .bind(&self.name)
+            .bind(&self.description)
+            .bind(&self.category)
+            .execute(db).await?;
+
+        transaction.commit().await?;
+
+        Ok(())
+    }
+
+    pub async fn read(db: &Pool<Sqlite>, id: &str) -> Result<Self> {
+        let link = query_as::<Sqlite, Self>("SELECT id, name, description, category FROM links WHERE id = $1")
+            .bind(id)
+            .fetch_one(db).await?;
+
+        Ok(link)
+    }
+
+    pub async fn read_from_category(db: &Pool<Sqlite>, category: &str) -> Result<Vec<Self>> {
+        let link = query_as::<Sqlite, Self>("SELECT id, name, description, category FROM links WHERE category = $1")
+            .bind(category)
+            .fetch_all(db).await?;
+
+        Ok(link)
+    }
+
+    pub async fn read_all(db: &Pool<Sqlite>, category: &str) -> Result<Vec<Self>> {
+        let link = query_as::<Sqlite, Self>("SELECT id, name, description, category FROM links")
+            .fetch_all(db).await?;
+
+        Ok(link)
+    }
+
+    pub async fn update(&self, db: &Pool<Sqlite>) -> Result<()> {
+        let transaction = db.begin().await?;
+
+        query("UPDATE links SET name = $1, description = $2 WHERE id = $3")
+            .bind(&self.name)
+            .bind(&self.description)
+            .bind(&self.id)
+            .execute(db).await?;
+        
+        transaction.commit().await?;
+
+        Ok(())
+    }
+
+    pub async fn delete(&self, db: &Pool<Sqlite>) -> Result<()> {
+        let transaction = db.begin().await?;
+
+        query("DELETE FROM links WHERE id = $1")
+            .bind(&self.id)
+            .execute(db).await?;
+        
+        transaction.commit().await?;
+
+        Ok(())
+    }
+    
+}

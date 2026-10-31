@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}ホーム{% endblock title %}
+{% block main %}
+<h1>{{site_title}}</h1>
+<p>{{site_description}}</p>
+<h2>最近追加されたリンク(上位10件)</h2>
+<table border="1">
+    <tr><td>URL</td><td>カウンター</td><td>貢献者</td><td>概要</td></tr>
+    {% for link in links_headline%}<tr><td><a href="/jump/{{link.id}}">{{link.url}}</a></td><td>{{link.counter}}</td><td>{{link.contributor}}</td><td>{{link.description}}</td></tr>
+{%endfor%}</table>
+<h2>カテゴリ一覧</h2>
+<table border="1">
+    <tr><td>名前</td><td>概要</td></tr>
+    {% for category in categories%}<tr><td><a href="/category/{{category.id}}">{{category.name}}</a></td><td>{{category.description}}</td></tr>
+{%endfor%}</table>
+</table>
+{% endblock main %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}リクエスト{% endblock title %}
+{% block main %}
+<h1>追加リクエスト</h1>
+<p>リンクの追加をリクエストします。入力していただいたお名前はリンクの貢献者として表示されます。</p>
+<h2>ガイドラインについて</h2>
+<p>以下の条件に合うリンクを入力してください。</p>
+<ul>
+    {% for rule in site_guidelines%}
+    <li>{{rule}}</li>{% endfor %}
+</ul>
+<hr>
+<form method="post" action="/request">
+    <table>
+        <tr><td>URL:</td><td><input type="text" name="url"></td></tr>
+        <tr><td>短い説明:</td><td><input type="text" name="description"></td></tr>
+        <tr><td>あなたのお名前:</td><td><input type="text" name="handlename" value="匿名"></td></tr>
+        <tr><td>リンク集ID:</td><td><textarea name="linksid" id="linksid"></textarea></td></tr>
+        <tr><td></td><td><input type="submit" value="リクエスト"></td></tr>
+    </table>
+</form>
+<div>
+    {% for links in links_list %}<span>{{links.name}}</span><input type="checkbox" value="{{ links.id }}" name="linksids">&nbsp;/&nbsp;
+    {% endfor %}
+    <noscript>
+        <p>リンクを手動で追加してください。</p>
+    </noscript>
+</div>
+<script>
+    const checkboxes = document.querySelectorAll(
+        'input[name="linksids"]'
+    );
+
+    const textarea = document.getElementById("linksid");
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", () => {
+        const checkedItems = [...checkboxes]
+            .filter(item => item.checked)
+            .map(item => item.value);
+
+        textarea.value = checkedItems.join("\n");
+        });
+    });
+</script>
+{% endblock main %}

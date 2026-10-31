@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{links_name}}{% endblock title %}
+{% block main %}
+<h1>{{links_name}}</h1>
+<p>{{links_description}}<br><small>LinksID: {{links_id}}</small></p>
+<p>
+    {% if site_allowed_request %}<a href="/request/{{links_parent_categoryid}}">【親カテゴリにリンク追加をリクエストする】</a>{% endif %}
+    &nbsp;|&nbsp;
+    <a href="/category/{{links_parent_categoryid}}">親カテゴリ: {{links_parent_categoryname}}</a>
+</p>
+<h2>リンク一覧</h2>
+<table border="1">
+    <tr><td>URL</td><td>カウンター</td><td>貢献者</td><td>概要</td></tr>
+    {% for link in link_list%}<tr><td><a href="/jump/{{link.id}}">{{link.url}}</a></td><td>{{link.counter}}</td><td>{{link.contributor}}</td><td>{{link.description}}</td></tr>
+{% endfor %}</table>
+</table>
+{% endblock main %}
