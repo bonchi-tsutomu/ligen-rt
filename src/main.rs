@@ -3,6 +3,8 @@ use anyhow::Result;
 use clap::Parser;
 use tera::Tera;
 
+mod admin;
+
 use std::path::{Path, PathBuf};
 
 mod utils;
