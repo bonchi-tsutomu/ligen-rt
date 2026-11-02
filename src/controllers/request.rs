@@ -36,7 +36,7 @@ pub async fn endpoint_(data: Data<ActixData>, req: Form<FormReq>) -> Result<Http
             &req.handlename,
         ).await?;
 
-        let linksid_list: Vec<String> = req.linksid.split("\n").map(|id| id.to_string()).collect();
+        let linksid_list: Vec<String> = req.linksid.split("\n").map(|id| id.replace("\r", "").replace("\n", "").to_string()).collect();
 
         for linksid in linksid_list {
             log::info!("Add {} {}", &linkid, &linksid);

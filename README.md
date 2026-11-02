@@ -37,7 +37,8 @@ CREATE TABLE links (
 
 CREATE TABLE link_attribute (
     linkid VARCHAR(8) NOT NULL,
-    linksid VARCHAR(8) NOT NULL
+    linksid VARCHAR(8) NOT NULL,
+    id VARCHAR(8) NOT NULL
 );
 
 CREATE TABLE category (

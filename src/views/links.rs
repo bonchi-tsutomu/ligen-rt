@@ -34,8 +34,8 @@ pub async fn endpoint_(data: Data<ActixData>, path: Path<PathReq>) -> Result<Htt
     ctx.insert("links_parent_categoryid", &links.category);
     ctx.insert("links_parent_categoryname", &parent_category.name);
 
-    let links = LinkService::link_from_linksid(&pool, &links.id).await?;
-    ctx.insert("link_list", &links); 
+    let links_ = LinkService::link_from_linksid(&pool, &path.links_id).await?;
+    ctx.insert("link_list", &links_); 
 
     let html = data.tera.render("links.html", &ctx)?;
 

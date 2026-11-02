@@ -3,6 +3,8 @@ site:
   description: "Lorem Ipsum Dolor Sit Amet"
   guidelines: ["Hello", "World", "Foo", "Bar"]
   allow_request: true
+  secret_key: "FhH7W1eLSibk6flVOk7hoC_vWtapAsRLudtwD1CGU10cT3umZ2zHpHyNPOrJqi4EPBP7BSEpsiCxQtJPng_dFg"
+  admin_password: "hanadora"
 server:
   bind: localhost
   port: 8080

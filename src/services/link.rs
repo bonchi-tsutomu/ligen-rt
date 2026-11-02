@@ -40,6 +40,7 @@ impl LinkService {
         let attributes = LinkAttributeRepository::read_from_ids(pool, linksid).await?;
         let mut links = Vec::new();
         for attribute in attributes {
+            log::info!("GetAttribute {} {}", attribute.linkid, attribute.linksid);
             links.push(LinkService::read_from_id(pool, &attribute.linkid).await?);
         }
 

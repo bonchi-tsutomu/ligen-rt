@@ -15,7 +15,9 @@ pub struct SiteConfig {
     pub title: String,
     pub description: String,
     pub guidelines: Vec<String>,
-    pub allow_request: bool
+    pub allow_request: bool,
+    pub secret_key: String,
+    pub admin_password: String
 }
 
 #[derive(Deserialize, Clone)]

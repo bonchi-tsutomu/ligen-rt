@@ -60,6 +60,13 @@ impl LinkRepository {
         Ok(links)
     }
 
+    pub async fn read_all(db: &Pool<Sqlite>) -> Result<Vec<Self>> {
+        let links = query_as::<Sqlite, Self>("SELECT id, url, contributor, description, counter FROM link")
+            .fetch_all(db).await?;
+
+        Ok(links)
+    }
+
     pub async fn update(&self, db: &Pool<Sqlite>) -> Result<()> {
         let transaction = db.begin().await?;
 

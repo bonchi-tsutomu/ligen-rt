@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}ホーム{% endblock title %}
+{% block main %}
+<h1>管理者ページ</h1>
+<p>すべての操作を行えます。</p>
+<h2>カテゴリ</h2>
+<form action="/admin/add/category" method="post">
+<table>
+    <tr><td>カテゴリID:</td><td><input type="text" name="id" required></td></tr>
+    <tr><td>カテゴリ名:</td><td><input type="text" name="name" required></td></tr>
+    <tr><td>説明:</td><td><textarea name="description"></textarea></td></tr>
+    <tr><td></td><td><input type="submit" value="作成"></td></tr>
+</table>
+</form>
+<table border="1">
+{% for category in category_list %}
+    <tr>
+        <form method="post">
+            <td><input type="text" name="id" value="{{category.id}}" readonly></td>
+            <td><input type="text" name="name" value="{{category.name}}"></td>
+            <td><textarea name="description">{{category.description}}</textarea></td>
+            <td><button formaction="/admin/mod/category" type="submit">変更</button></td>
+            <td><button formaction="/admin/del/category" type="submit">削除</button></td>
+        </form>
+    </tr>
+{%endfor%}
+</table>
+<h2>リンクリスト</h2>
+<form action="/admin/add/links" method="post">
+<table>
+    <tr><td>リンクリストID:</td><td><input type="text" name="id" required></td></tr>
+    <tr><td>リンクリスト名前:</td><td><input type="text" name="name" required></td></tr>
+    <tr><td>カテゴリID:</td><td><input type="text" name="category" required></td></tr>
+    <tr><td>説明:</td><td><textarea name="description"></textarea></td></tr>
+    <tr><td></td><td><input type="submit" value="作成"></td></tr>
+</table>
+</form>
+<table border="1">
+{% for links in links_list %}
+    <tr>
+        <form method="post">
+            <td><input type="text" name="id" value="{{links.id}}" readonly></td>
+            <td><input type="text" name="name" value="{{links.name}}"></td>
+            <td><input type="text" name="category" value="{{links.category}}"></td>
+            <td><textarea name="description">{{links.description}}</textarea></td>
+            <td><button formaction="/admin/mod/links" type="submit">変更</button></td>
+            <td><button formaction="/admin/del/links" type="submit">削除</button></td>
+        </form>
+    </tr>
+{%endfor%}
+</table>
+<h2>リンク</h2>
+<form action="/admin/add/link" method="post">
+<table>
+    <tr><td>URL:</td><td><input type="text" name="url" required></td></tr>
+    <tr><td>説明:</td><td><textarea name="description"></textarea></td></tr>
+    <tr><td></td><td><input type="submit" value="作成"></td></tr>
+</table>
+</form>
+<table border="1">
+{% for links in link_list %}
+    <tr>
+        <form method="post">
+            <td><input type="text" name="id" value="{{links.id}}" readonly></td>
+            <td><input type="text" name="url" value="{{links.url}}"></td>
+            <td><textarea name="description">{{links.description}}</textarea></td>
+            <td><button formaction="/admin/mod/link" type="submit">変更</button></td>
+            <td><button formaction="/admin/del/link" type="submit">削除</button></td>
+        </form>
+    </tr>
+{%endfor%}
+</table>
+<h2>属性</h2>
+<form action="/admin/add/attribute" method="post">
+<table>
+    <tr><td>リンクID:</td><td><input type="text" name="linkid" required></td></tr>
+    <tr><td>リンク集ID:</td><td><input type="text" name="linksid" required></td></tr>
+    <tr><td></td><td><input type="submit" value="作成"></td></tr>
+</table>
+</form>
+<table border="1">
+{% for attribute in attribute_list %}
+    <tr>
+        <form method="post">
+            <td><input type="text" name="linkid" value="{{attribute.linkid}}" readonly></td>
+            <td><input type="text" name="linksid" value="{{attribute.linksid}}"></td>
+            <td><button formaction="/admin/del/attribute" type="submit">削除</button></td>
+        </form>
+    </tr>
+{%endfor%}
+</table>
+{% endblock main %}

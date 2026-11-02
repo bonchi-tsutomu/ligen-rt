@@ -58,7 +58,7 @@ impl LinksRepository {
         Ok(link)
     }
 
-    pub async fn read_all(db: &Pool<Sqlite>, category: &str) -> Result<Vec<Self>> {
+    pub async fn read_all(db: &Pool<Sqlite>) -> Result<Vec<Self>> {
         let link = query_as::<Sqlite, Self>("SELECT id, name, description, category FROM links")
             .fetch_all(db).await?;
 
